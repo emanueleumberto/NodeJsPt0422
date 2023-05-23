@@ -1,0 +1,15 @@
+{
+  "name": "nodeproject1",
+  "version": "1.0.0",
+  "description": "Primo progetto NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Umberto Emanuele",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
