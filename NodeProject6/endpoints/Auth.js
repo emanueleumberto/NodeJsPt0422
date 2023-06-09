@@ -39,7 +39,7 @@ router.post('/register', (req, res, next) => {
                 verified: false
             });
             await user.save();
-            res.status(201).json(user);
+            return res.status(201).json(user);
         });
     });
 
@@ -66,15 +66,16 @@ router.post('/login', async (req, res, next) => {
                 id: userLogin._id,
                 username: userLogin.username,
                 email: userLogin.email,
-                exp: Math.floor(Date.now() / 1000) + (60 * 60),
+                /*exp: Math.floor(Date.now() / 1000) + (60 * 60),*/
             }, 
-            jwtSecretKey);
-            res.status(200).json(token)
+            jwtSecretKey,
+            {expiresIn : '1h'});
+            return res.status(200).json(token)
         } else {
-            res.status(400).json({error: 'Invalid Password'})
+            return res.status(400).json({error: 'Invalid Password'})
         }
     } else {
-        res.status(400).json({error: 'Invalid Username'})
+        return res.status(400).json({error: 'Invalid Username'})
     }
 })
 

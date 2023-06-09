@@ -8,12 +8,12 @@ const UserModel = require("../models/UserModel");
 const auth = require("../middlewares/AuthMiddleware")
 
 router.get('/', (req, res, next) => {
-    res.status(200).json({message: 'Hello world!'});
+    return res.status(200).json({message: 'Hello world!'});
 })
 
 router.get('/users', auth, async (req, res, next) => {
     const allUsers = await UserModel.find();
-    res.status(200).json(allUsers);
+    return res.status(200).json(allUsers);
 })
 
 // Export Router

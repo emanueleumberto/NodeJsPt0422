@@ -9,15 +9,20 @@ const auth = (req, res, next) => {
     let token = req.headers.authorization;
     //console.log(token)
     if(!token) {
-        return res.status(401).json({error: 'Unauthorized'})
+        //return res.status(401).json({error: 'Unauthorized'})
+        const err = new Error('Unauthorized');
+        err.status = 401;
+        next(err);
     } else {
         token = token.split(' ')[1];
-        //console.log(token)
         jwt.verify(token, jwtSecretKey, (err, data) => {
             if(err) {
-                console.log(err)
-                return res.status(401).json({error: 'Invalid token'})
-                //next(err)
+                //return res.status(401).json({error: 'Invalid token'}) 
+                err.message = 'Invalid token'; // di default 'invalid signature'
+                err.status = 401;
+                next(err)
+            } else {
+                console.log(data)
             }
         })
     }

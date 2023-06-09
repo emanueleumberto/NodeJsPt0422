@@ -6,9 +6,9 @@ const logUrl = (req, res, next) => {
 }
 
 const  errorHandler = (err, req, res, next) => {
-    const e = err.toString();
-    console.error("Sono il middleware errorHandler!! " + e);
-    return res.status(400).json({error: "User ID not found"}, ...err);
+    console.log(err.status, err.message)
+    //console.error("Sono il middleware errorHandler!! " + e);
+    return res.status(err.status).json({error: err.message});
 }
 
 module.exports = { logUrl, errorHandler };
