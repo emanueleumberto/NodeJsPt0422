@@ -12,6 +12,7 @@ SendGrid -> https://sendgrid.com/
 dotenv -> https://www.npmjs.com/package/dotenv
 node.bcript -> https://www.npmjs.com/package/bcrypt -> https://github.com/kelektiv/node.bcrypt.js
 JWT Token -> https://jwt.io/ -> https://www.npmjs.com/package/jsonwebtoken
+Nodemon -> https://www.npmjs.com/package/nodemon
 
 
 -> npm init -y
@@ -23,5 +24,6 @@ JWT Token -> https://jwt.io/ -> https://www.npmjs.com/package/jsonwebtoken
 -> npm install multer-storage-cloudinary
 -> npm install --save @sendgrid/mail
 -> npm install dotenv --save
--> npm i bcrypt
+-> npm install bcrypt
 -> npm install jsonwebtoken
+-> npm install nodemon --save-dev
