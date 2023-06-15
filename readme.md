@@ -3,7 +3,7 @@ Stack MERN -> MongoDB - ExpressJS - ReactJS - NodeJS
 NodeJS -> https://nodejs.org/
 ExpressJS -> https://expressjs.com/
 MongooseJS -> https://mongoosejs.com/
-Cors -> https://github.com/expressjs/cors
+Cors -> https://github.com/expressjs/cors -> https://expressjs.com/en/resources/middleware/cors.html
 MongoDB -> https://www.mongodb.com/
 Multer -> https://expressjs.com/en/resources/middleware/multer.html
 Cloudinary -> https://cloudinary.com/
@@ -13,6 +13,7 @@ dotenv -> https://www.npmjs.com/package/dotenv
 node.bcript -> https://www.npmjs.com/package/bcrypt -> https://github.com/kelektiv/node.bcrypt.js
 JWT Token -> https://jwt.io/ -> https://www.npmjs.com/package/jsonwebtoken
 Nodemon -> https://www.npmjs.com/package/nodemon
+JWT-DECODE -> https://www.npmjs.com/package/jwt-decode -> lato Client!!!!
 
 
 -> npm init -y
@@ -27,3 +28,8 @@ Nodemon -> https://www.npmjs.com/package/nodemon
 -> npm install bcrypt
 -> npm install jsonwebtoken
 -> npm install nodemon --save-dev
+-> npm install jwt-decode -> Da utilizzare sia lato server che lato client. Di solito si usa solo lato client
+-> npm install passport 
+-> npm install passport-facebook
+-> npm install passport-google-oidc
+-> npm install passport-twitter
