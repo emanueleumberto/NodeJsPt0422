@@ -33,3 +33,17 @@ JWT-DECODE -> https://www.npmjs.com/package/jwt-decode -> lato Client!!!!
 -> npm install passport-facebook
 -> npm install passport-google-oidc
 -> npm install passport-twitter
+
+
+
+// Facebook Login
+- Vai su Facebook Developer e accedi utilizzando le tue credenziali di Facebook.
+- https://developers.facebook.com/
+- Seleziona Le mie app
+- Fai clic su Aggiungi una nuova app 
+- Configura Facebook Login
+- Immettere il nome visualizzato e l'e-mail di contatto
+- Fai clic su Prodotti nella barra laterale poi Facebook Login -> configura -> Impostazioni. 
+- Attiva l'accesso OAuth del client. Attiva l'accesso Web OAuth. Inserisci l'URL di reindirizzamento valido in "Valid OAuth redirect URIs" . Fare clic sul pulsante Salva.
+- Visita le tue developer settings per aggiornare i dati ed inserire un documento valido
+- Fai clic su Di base sotto le impostazioni nella barra laterale.

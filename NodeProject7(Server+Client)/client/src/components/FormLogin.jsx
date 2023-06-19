@@ -19,7 +19,7 @@ export default function FormLogin() {
 
     const formSubmittedHandler = () => {
         //console.log(User);
-        axios.post('http://localhost:3001/login', User)
+        axios.post('http://localhost:3001/api/login', User)
                 .then((response) => { 
                     localStorage.setItem('userLogin', response.data);
                     navigate("/");
@@ -28,18 +28,6 @@ export default function FormLogin() {
                     setError(error.response.data)
                     //console.error(error.response.data) 
                 })
-    }
-
-    const logWithFacebook = () => {
-        axios.get('http://localhost:3001/fblogin', User)
-        .then((response) => { 
-            //localStorage.setItem('userLogin', response.data);
-            console.log(response)
-        })
-        .catch(error => { 
-            setError(error.response.data)
-            //console.error(error.response.data) 
-        })
     }
 
   return (
@@ -53,15 +41,16 @@ export default function FormLogin() {
                 <Form.Control type="password" name="password" placeholder="Enter password"  onChange={formHandler} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formButton">
-                <Button variant="dark" onClick={formSubmittedHandler}>Login</Button>
+                <Button variant="dark" onClick={formSubmittedHandler} size="lg">Login</Button>
             </Form.Group>
             { Error ? <Alert key={'danger'} variant={'danger'}>
                 {Error.error}
             </Alert> : ''}
             <Form.Group className="mb-3" controlId="formButton">
-                <Button variant="dark" onClick={logWithFacebook}>Facebook Login</Button>
+                <Button href="http://localhost:3001/api/auth/facebook" variant="secondary" size="lg">Facebook Login</Button>
             </Form.Group>
         </Form>
     </>
   )
 }
+

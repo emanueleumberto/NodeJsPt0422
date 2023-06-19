@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { createRef, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function RegisterForm() {
 
     const [User, setUser] = useState({});
+    const navigate = useNavigate();
+    const img = createRef();
 
     const formHandler = (event) => {
         //console.log(event.target.name, event.target.value)
@@ -16,9 +19,24 @@ export default function RegisterForm() {
 
     const formSubmittedHandler = () => {
         //console.log(User);
-        axios.post('http://localhost:3001/register', User)
-                .then((response) => { console.log(response)})
-                .catch(error => { console.error(error) })
+        //console.log(img.current.files[0]); // file che sto importando da form
+        let data = new FormData();
+        data.append('name', User.name);
+        data.append('lastname', User.lastname);
+        data.append('city', User.city);
+        data.append('email', User.email);
+        data.append('password', User.password);
+        data.append('uploadFile', img.current.files[0]);
+
+        const config = {     
+            headers: { 'content-type': 'multipart/form-data' }
+        }
+
+        //console.log(data)
+        
+        axios.post('http://localhost:3001/api/register', data, config)
+                .then((response) => { navigate("/login");})
+                .catch(error => { console.error(error) }) 
     }
 
 
@@ -42,7 +60,7 @@ export default function RegisterForm() {
                 <Form.Control type="password" name="password" placeholder="Enter password" onChange={formHandler} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formFile">
-                <Form.Control type="file" name="img" placeholder="Enter Image" onChange={formHandler} />
+                <Form.Control type="file" name="img" placeholder="Enter Image" ref={img} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formButton">
                 <Button variant="dark" onClick={formSubmittedHandler}>Submit</Button>

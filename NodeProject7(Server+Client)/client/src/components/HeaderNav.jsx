@@ -1,24 +1,54 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Nav, Navbar } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import jwt_decode from "jwt-decode";
 
 export default function HeaderNav() {
+
+  const [User, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let userLogin = localStorage.getItem("userLogin");
+    if(userLogin) {
+      var userLoginDecoded = jwt_decode(userLogin);
+      setUser(userLoginDecoded);
+    }
+  }, [])
+
+  const logout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("userLogin");
+    navigate("/login");
+  }
+
   return (
-    <Navbar bg="light" expand="lg">
-        <Container>
+    <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
+      <Container>
         <Navbar.Brand href="#home">React-NodeJS-APP</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
             <Link className="nav-link" to="/">Home</Link>
             <Link className="nav-link" to="/users">Users</Link>
-            <Navbar.Collapse>
-                <Link className="nav-link" to="/login">Login</Link>
-                <Link className="nav-link" to="/register">Register</Link>
-            </Navbar.Collapse>
-            </Nav>
+          </Nav>
+          <Nav>
+            { !User ? 
+                <><Link className="nav-link" to="/login">Login</Link>
+                  <Link className="nav-link" to="/register">Register</Link>
+                </>
+              : <>
+              
+                  <Link className="nav-link" to="/profile">Hi {User.name + ' ' + User.lastname}</Link>
+                  <Link className="nav-link" onClick={logout}>Logout</Link>
+                </>
+            }
+          </Nav>
         </Navbar.Collapse>
-        </Container>
+      </Container>
     </Navbar>
   )
 }
+
+
+/* http://graph.facebook.com/1689614800/picture?type=square */

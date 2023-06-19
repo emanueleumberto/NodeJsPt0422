@@ -8,6 +8,8 @@ const UserSchema = new mongoose.Schema(
         city: String,
         email: { type: String, required: true },
         password: { type: String, required: true },
+        img: String,
+        provider: { type: String, default: 'register'},
         verified: { type: Boolean, default: false }
     }
 )

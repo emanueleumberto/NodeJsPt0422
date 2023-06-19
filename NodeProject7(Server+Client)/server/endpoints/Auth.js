@@ -5,16 +5,21 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
 const saltRounds = 10;
-//const bcriptPassword = process.env.APP_PASSWORD_BCRIPT;
 const jwtSecretKey = process.env.APP_JWT_SECRET_KEY;
+require('dotenv').config();
 
 // Models
 const UserModel = require('../models/UserModel')
 
+// Middlewares
+const upload = require('../middlewares/uploadImg')
+
 // Auth Endpoints
 
-routers.post('/register', (req, res, next) => {
+routers.post('/api/register', upload.single('uploadFile'), (req, res, next) => {
+    const data = req.file ? req.file.path : '' ; // Prendo il percorso del salvataggio su coudinaryd del file immagine
     const password = req.body.password;
+    //console.log(req.body, req.file)
 
         // BCript HASH
         bcrypt.genSalt(saltRounds, function(err, salt) {
@@ -24,6 +29,7 @@ routers.post('/register', (req, res, next) => {
                 const user = new UserModel({
                     ...req.body,
                     password: hash,
+                    img: data,
                     verified: false
                 });
                 await user.save();
@@ -32,7 +38,7 @@ routers.post('/register', (req, res, next) => {
         });
 })
 
-routers.post('/login', async (req, res, next) => {
+routers.post('/api/login', async (req, res, next) => {
     const user = req.body;
     const userLogin = await UserModel.findOne({email: req.body.email});
     if(!userLogin) {
@@ -51,27 +57,38 @@ routers.post('/login', async (req, res, next) => {
                 name: userLogin.name,
                 lastname: userLogin.lastname,
                 email: userLogin.email,
+                img: userLogin.img
             }, 
             jwtSecretKey,
             {expiresIn : '1h'});
             return res.status(200).json(token)
     }
-    console.log(user)
 })
 
-routers.post('/autologin', (req, res, next) => {
+routers.post('/api/autologin', (req, res, next) => {
 
 })
 
-routers.get('/fblogin', passport.authenticate('facebook'));
+routers.get('/api/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
 
-routers.get('/redirect/facebook', passport.authenticate('facebook', { 
-    failureRedirect: '/register', failureMessage: true }),
-    function(req, res) {
-        // Aggiungo il token JWT
-        res.redirect('/');
-    }
-);
+routers.get('/api/facebook/callback', passport.authenticate('facebook', { 
+                                        failureRedirect : process.env.BASE_URL + process.env.Client_PORT + '/login',
+                                        failureMessage: true }),
+                                                function(req, res) {
+                                                    console.log("RespTest: ", req.user)
+                                                    // Generare un JWT Token
+                                                    const token = jwt.sign(
+                                                        { 
+                                                            id: req.user._id,
+                                                            name: req.user.name,
+                                                            lastname: req.user.lastname,
+                                                            email: req.user.email,
+                                                            img: req.user.img
+                                                        }, 
+                                                        jwtSecretKey,
+                                                        {expiresIn : '1h'});
+                                                        res.redirect(process.env.BASE_URL + process.env.Client_PORT + '/api/' + token);
+                                        });
 
 // Export routers
 module.exports = routers;

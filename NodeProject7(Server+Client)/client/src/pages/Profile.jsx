@@ -1,14 +1,14 @@
 import React from 'react'
-import RegisterForm from '../components/RegisterForm'
-import { Container } from 'react-bootstrap'
 import HeaderNav from '../components/HeaderNav'
+import { Container } from 'react-bootstrap'
+import CardProfile from '../components/CardProfile'
 
-export default function Register() {
+export default function Profile() {
   return (
     <>
       <HeaderNav />
       <Container className="my-5 w-25" >
-          <RegisterForm />
+          <CardProfile />
       </Container>
     </>
   )
